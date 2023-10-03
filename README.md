@@ -1,0 +1,1 @@
+This is a small header-only graphics library for C to be used in future projects
