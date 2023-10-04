@@ -75,8 +75,12 @@ defer:
 
 int main(){
 
-    //colorz_fill(pixels, WDITH, HEIGHT, 0xFF00FFFF); //R B G A
-    colorz_fillRect(pixels,WIDTH, HEIGHT, 25,25,75,75,0x0BB066FF);
-    colorz_saveToPPM(pixels, WIDTH, HEIGHT, "out.ppm");
+    //colorz_fill(pixels, WDITH, HEIGHT, 0xFF00FFFF); //BGR
+    colorz_fillRect(pixels,WIDTH, HEIGHT, 25,25,75,75,0xE66B3D);
+    const char* filePath = "out.ppm";
+    Errno err = colorz_saveToPPM(pixels, WIDTH, HEIGHT, filePath);
+    if(err) {
+        fprintf(stderr, "could not save file %s\n", filePath );
+    }
     return 0;
 }
