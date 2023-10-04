@@ -3,13 +3,13 @@
 #include <stdint.h>
 #include <errno.h>
 
-#define WDITH 800
+#define WIDTH 800
 #define HEIGHT 600
 
 #define returnDefer(val) do {res = (val); goto defer;} while(0)
 
 
-static uint32_t pixels[WDITH*HEIGHT];
+static uint32_t pixels[WIDTH*HEIGHT];
 
 typedef int Errno;
 
@@ -19,6 +19,25 @@ void colorz_fill(uint32_t* pixels, size_t w, size_t h, uint32_t color){
        pixels[i] = color;
     }
 }
+
+void colorz_fillRect(uint32_t *pixels, size_t pixelsWidth, size_t pixelsHeight,
+                      int x0, int y0, size_t w, size_t h,
+                      uint32_t color)
+{
+    //Loop through the entire canvas and if its within our rect bounds assign the pixel a color
+    for (int dy = 0; dy < (int) h; ++dy) {
+        int y = y0 + dy;
+        if (0 <= y && y < (int) pixelsHeight) {
+            for (int dx = 0; dx < (int) w; ++dx) {
+                int x = x0 + dx;
+                if (0 <= x && x < (int) pixelsWidth) {
+                    pixels[y*pixelsWidth + x] = color;
+                }
+            }
+        }
+    }
+}
+
 
 Errno colorz_saveToPPM(uint32_t* pixels, size_t w, size_t h, const char* filePath){
 
@@ -56,7 +75,8 @@ defer:
 
 int main(){
 
-    colorz_fill(pixels, WDITH, HEIGHT, 0xFF0000FF);
-    colorz_saveToPPM(pixels, WDITH, HEIGHT, "out.ppm");
+    //colorz_fill(pixels, WDITH, HEIGHT, 0xFF00FFFF); //R B G A
+    colorz_fillRect(pixels,WIDTH, HEIGHT, 25,25,75,75,0x0BB066FF);
+    colorz_saveToPPM(pixels, WIDTH, HEIGHT, "out.ppm");
     return 0;
 }
