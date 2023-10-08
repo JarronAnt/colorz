@@ -107,11 +107,33 @@ bool checkerBoard(void)
     return true;
 }
 
+void colorz_fillCircle(uint32_t *pixels, size_t pixelsWidth, size_t pixelsHeight,
+                        int cx, int cy, int r,
+                        uint32_t color)
+{
+    int x1 = cx - r;
+    int y1 = cy - r;
+    int x2 = cx + r;
+    int y2 = cy + r;
+    for (int y = y1; y <= y2; ++y) {
+        if (0 <= y && y < (int) pixelsHeight) {
+            for (int x = x1; x <= x2; ++x) {
+                if (0 <= x && x < (int) pixelsWidth) {
+                    int dx = x - cx;
+                    int dy = y - cy;
+                    if (dx*dx + dy*dy <= r*r) {
+                        pixels[y*pixels_width + x] = color;
+                    }
+                }
+            }
+        }
+    }
+}
+
 float lerpf(float a, float b, float t)
 {
     return a + (b - a)*t;
 }
-
 
 int main(){
 
