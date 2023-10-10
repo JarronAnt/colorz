@@ -122,7 +122,7 @@ void colorz_fillCircle(uint32_t *pixels, size_t pixelsWidth, size_t pixelsHeight
                     int dx = x - cx;
                     int dy = y - cy;
                     if (dx*dx + dy*dy <= r*r) {
-                        pixels[y*pixels_width + x] = color;
+                        pixels[y*pixelsWidth + x] = color;
                     }
                 }
             }
@@ -139,7 +139,8 @@ int main(){
 
     //colorz_fill(pixels, WDITH, HEIGHT, 0xFF00FFFF); //BGR
     //colorz_fillRect(pixels,WIDTH, HEIGHT, 25,25,75,75,0xE66B3D);
-    checkerBoard();
+    //checkerBoard();
+    colorz_fillCircle(pixels, WIDTH, HEIGHT, WIDTH/2, HEIGHT/2, 10, 0xE66B3D);
     const char* filePath = "out.ppm";
     Errno err = colorz_saveToPPM(pixels, WIDTH, HEIGHT, filePath);
     if(err) {
